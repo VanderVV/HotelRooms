@@ -1,6 +1,5 @@
 package stepDefinition;
 
-import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -10,13 +9,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
-//import org.testng.Assert;
-//import org.testng.annotations.Test;
-import static org.junit.Assert.assertEquals;
-//
-//import com.aventstack.extentreports.ExtentTest;
-//import com.aventstack.extentreports.Status;
 
+import static org.junit.Assert.assertEquals;
 import static stepDefinition.HotelObjects.chromeWebdriver;
 import static stepDefinition.HotelObjects.chromedriverPath;
 
@@ -135,11 +129,11 @@ public class BasePage {
             dropdown.selectByValue(value);
         } catch (NoSuchElementException e) {
             throw new NoSuchElementException(messageNoSuchElementException + element.toString());
-        } catch (Exception e)
-        {
-            throw  new Exception(element.toString() + " .... "+ e);
+        } catch (Exception e) {
+            throw new Exception(element.toString() + " .... " + e);
         }
     }
+
     public static void selectOptionByText(WebElement element, String value) throws Exception {
         try {
             Select dropdown = new Select(element);
@@ -147,9 +141,8 @@ public class BasePage {
             dropdown.selectByVisibleText(value);
         } catch (NoSuchElementException e) {
             throw new NoSuchElementException(messageNoSuchElementException + element.toString());
-        }catch (Exception e)
-        {
-            throw  new Exception(element.toString() + " .... "+ e);
+        } catch (Exception e) {
+            throw new Exception(element.toString() + " .... " + e);
         }
     }
     public static void closeWindow() {
@@ -168,7 +161,8 @@ public class BasePage {
 
         return attributeValue;
     }
-public static String getAttributeValue(WebElement element) {
+
+    public static String getAttributeValue(WebElement element) {
         String attributeValue = "";
         try {
             attributeValue = element.getAttribute("value");
@@ -235,10 +229,10 @@ public static String getAttributeValue(WebElement element) {
 
     /**
      * Verifies if specified element has a specified text.
-     * @param element			Web element to verify
-     * @param checkPointValue 		The expected text of the attribute
-     * @param test				The ExtendBase Object
-     * @return					True if Text is present on element
+     * @param element            Web element to verify
+     * @param checkPointValue        The expected text of the attribute
+     * @param test                The ExtendBase Object
+     * @return True if Text is present on element
      */
 //    public static boolean verifyElementText(WebElement element, String checkPointValue,  ExtentTest test) {
 //
@@ -256,21 +250,20 @@ public static String getAttributeValue(WebElement element) {
 
     /***
      * Verifies if specified element has a specified text.
-     * @param element		Web element to verify
-     * @param checkPoint 	The expected text of the attribute
-     * @return				True if Text is present on element
+     * @param element        Web element to verify
+     * @param checkPoint    The expected text of the attribute
+     * @return True if Text is present on element
      */
-    public static boolean verifyElementText(WebElement element,String checkPoint) {
+    public static boolean verifyElementText(WebElement element, String checkPoint) {
         String elementText = "";
         try {
             elementText = getAttributeValue(element);
 
 
-
             assertEquals(elementText, checkPoint);
-        }catch(AssertionError e) {
+        } catch (AssertionError e) {
             throw new AssertionError(messageAssertionError);
-        }catch(NoSuchElementException e) {
+        } catch (NoSuchElementException e) {
             throw new NoSuchElementException(messageNoSuchElementException + element.toString());
         }
         return elementText.equals(checkPoint);

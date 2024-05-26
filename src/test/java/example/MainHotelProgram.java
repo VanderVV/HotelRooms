@@ -4,11 +4,10 @@ import static stepDefinition.BasePage.*;
 import static stepDefinition.HotelObjects.*;
 
 
-
 public class MainHotelProgram {
 
 
-    public static void mainProgram( String location, String hotelName, String roomtype, String numberofRooms, String dateCheckIn, String dateCheckOut, String adultRooms, String childRooms) throws Exception {
+    public static void mainProgram(String location, String hotelName, String roomtype, String numberofRooms, String dateCheckIn, String dateCheckOut, String adultRooms, String childRooms) throws Exception {
 
         driverSetup(url);
 
@@ -20,10 +19,10 @@ public class MainHotelProgram {
 
         waitForElementByID(location_dd, 5);
 
-        selectOptionByValue(findElementByID(location_dd), location );
+        selectOptionByValue(findElementByID(location_dd), location);
         selectOptionByValue(findElementByID(hotels_dd), hotelName);
         selectOptionByValue(findElementByID(room_type_dd), roomtype);
-        selectOptionByText(findElementByID(room_nos_dd), numberofRooms );
+        selectOptionByText(findElementByID(room_nos_dd), numberofRooms);
 
         setText(findElementByID(datepick_in), dateCheckIn);
         setText(findElementByID(datepick_out), dateCheckOut);
@@ -35,11 +34,11 @@ public class MainHotelProgram {
 
         waitForElementByID(hotel_name_0_val, 1);
 
-        String HoletName        = getAttributeValue(findElementByID(hotel_name_0_val));
-        String HoletLocation    = getAttributeValue(findElementByID(location_0_val));
-        String HoletRooms       = getAttributeValue(findElementByID(rooms_0_val));
-        String HoletRoomType    = getAttributeValue(findElementByID(room_type_0_val));
-        String NoDays           = getAttributeValue(findElementByID(no_days_0_val));
+        String HoletName = getAttributeValue(findElementByID(hotel_name_0_val));
+        String HoletLocation = getAttributeValue(findElementByID(location_0_val));
+        String HoletRooms = getAttributeValue(findElementByID(rooms_0_val));
+        String HoletRoomType = getAttributeValue(findElementByID(room_type_0_val));
+        String NoDays = getAttributeValue(findElementByID(no_days_0_val));
 
         verifyElementText(findElementByID(hotel_name_0_val), hotelName);
         verifyElementText(findElementByID(location_0_val), location);
