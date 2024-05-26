@@ -3,7 +3,7 @@ package stepDefinition;
 
 public class HotelObjects {
 
-    public static String url                        = "https://adactinhotelapp.com/index.php";
+    public static String url = "https://adactinhotelapp.com/index.php";
     public static String chromedriverPath 	        = "B:\\Coding\\HotelRooms\\src\\main\\resources\\drivers/chromedriver.exe";
     public static String chromeWebdriver 	        = "webdriver.chrome.driver";
 
@@ -30,7 +30,7 @@ public class HotelObjects {
     public static String btnSearch 	    = "Submit";
     public static String btnContinue 	= "continue";
     public static String btnReset 	    = "Reset";
-    public static String radiobutton_0  = "radiobutton_0";
+    public static String radiobutton_0 = "radiobutton_0";
 
 
     //    Page Values
