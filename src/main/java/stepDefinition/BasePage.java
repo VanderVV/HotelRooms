@@ -14,11 +14,17 @@ import static stepDefinition.HotelObjects.chromeWebdriver;
 import static stepDefinition.HotelObjects.chromedriverPath;
 
 public class BasePage {
-    protected static WebDriver driver ;
-    protected WebDriverWait wait ;
+    protected static WebDriver driver;
+    protected WebDriverWait wait;
 
-    public static void driverSetup(String url)
-    {
+    public BasePage(WebDriver driver) {
+        BasePage.driver = driver;
+        wait = new WebDriverWait(driver, 110);
+
+        PageFactory.initElements(driver, this);
+    }
+
+    public static void driverSetup(String url) {
         System.setProperty(chromeWebdriver, chromedriverPath);
 
         ChromeOptions options = new ChromeOptions();
@@ -30,13 +36,6 @@ public class BasePage {
         driver.get(url);
         WebDriver.Window window = driver.manage().window();
         window.maximize();
-    }
-    public BasePage(WebDriver driver)
-    {
-        BasePage.driver = driver;
-        wait = new WebDriverWait(driver,110);
-
-        PageFactory.initElements(driver, this);
     }
 
     static final String messageNoSuchElementException = "Unable to locate element by name: ";
@@ -50,17 +49,14 @@ public class BasePage {
 
             element.sendKeys(text);
         } catch (NoSuchElementException e) {
-            throw new NoSuchElementException(messageNoSuchElementException + element.toString());
+            throw new NoSuchElementException(messageNoSuchElementException + element);
         }
     }
 
-    public static WebElement findElementBy(String finder, String value)
-    {
+    public static WebElement findElementBy(String finder, String value) {
         WebElement element;
-        try
-        {
-            switch (finder)
-            {
+        try {
+            switch (finder) {
                 case "id":
                     element = driver.findElement(By.id(value));
                     break;
@@ -112,7 +108,7 @@ public class BasePage {
         try {
             element.click();
         } catch (NoSuchElementException e) {
-            throw new NoSuchElementException(messageNoSuchElementException + element.toString());
+            throw new NoSuchElementException(messageNoSuchElementException + element);
         }
     }
 
@@ -143,9 +139,9 @@ public class BasePage {
         try {
             attributeValue = element.getAttribute(attribute);
         } catch (NoSuchElementException e) {
-            throw new NoSuchElementException(messageNoSuchElementException + element.toString());
+            throw new NoSuchElementException(messageNoSuchElementException + element);
         } catch (ElementNotInteractableException e) {
-            throw new ElementNotInteractableException(messageElementNotInteractableException + element.toString());
+            throw new ElementNotInteractableException(messageElementNotInteractableException + element);
         }
 
         return attributeValue;
