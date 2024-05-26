@@ -29,12 +29,8 @@ public class Main {
         System.setProperty(chromeWebdriver, chromedriverPath);
         WebDriver driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-//        setDriver(driver);
 
-
-//        driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
         driverFinal.set(driver);
-//        openBrowser(url);
         driver.get(url);
         driver.navigate().refresh();
         maximizeWindow();
