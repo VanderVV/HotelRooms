@@ -1,72 +1,43 @@
 package org.example;
-import java.util.Iterator;
 
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-
-
-import org.openqa.selenium.By;
-
-import org.openqa.selenium.WebDriver;
-
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-//import stepDefinition.WebDriverChrome;
-
-import static java.sql.DriverManager.getDriver;
 import static stepDefinition.BasePage.*;
 import static stepDefinition.HotelObjects.*;
 
-
 public class Main {
 
-    private static ThreadLocal<WebDriver> driverFinal = new ThreadLocal<WebDriver>();
 
     public static void main(String[] args) {
 
+        driverSetup(url);
 
+        waitForElementByID(username_input, 5);
 
-        System.setProperty(chromeWebdriver, chromedriverPath);
-        WebDriver driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-//        setDriver(driver);
+        setText(findElementByID(username_input), "AutotestB");
+        setText(findElementByID(password_input), "W858OZ");
+        click(findElementByID(btnLogin));
 
+        waitForElementByID(location_dd, 5);
 
-//        driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
-        driverFinal.set(driver);
-//        openBrowser(url);
-        driver.get(url);
-        driver.navigate().refresh();
-        maximizeWindow();
+        selectOptionByValue(findElementByID(location_dd), "Sydney");
+        selectOptionByValue(findElementByID(hotels_dd), "Hotel Sunshine");
+        selectOptionByValue(findElementByID(room_type_dd), "Standard");
+        selectOptionByValue(findElementByID(room_nos_dd), "2");
 
-        waitForElement( username_input, 5);
+        setText(findElementByID(datepick_in), "25/05/2024");
+        setText(findElementByID(datepick_out), "27/05/2024");
 
-        setText( findElementBy(byID, username_input, driver) , "AutotestB");
-        setText( findElementBy(byID, password_input, driver) , "W858OZ");
-        click( findElementBy(byID, btnLogin, driver) );
+        selectOptionByValue(findElementByID(adult_room_dd), "1");
+        selectOptionByValue(findElementByID(child_room_dd), "2");
 
-        waitForElement( location_dd, 5);
+        click(findElementByID(btnSearch));
 
-        selectOptionByValue( findElementBy(byID, location_dd, driver) , "Sydney");
-        selectOptionByValue( findElementBy(byID, hotels_dd, driver) , "Hotel Sunshine");
-        selectOptionByValue( findElementBy(byID, room_type_dd, driver) , "Standard");
-        selectOptionByValue( findElementBy(byID, room_nos_dd, driver) , "2");
+        waitForElementByID(hotel_name_0_val, 1);
 
-        setText( findElementBy(byID, datepick_in, driver) , "25/05/2024");
-        setText( findElementBy(byID, datepick_out, driver) , "27/05/2024");
-
-        selectOptionByValue( findElementBy(byID, adult_room_dd, driver) , "1");
-        selectOptionByValue( findElementBy(byID, child_room_dd, driver) , "2");
-
-        click( findElementBy(byID, btnSearch, driver) );
-
-        waitForElement( hotel_name_0_val, 1);
-
-        String HoletName        = getAttributeValue( findElementBy(byID, hotel_name_0_val, driver) , "value");
-        String HoletLocation    = getAttributeValue( findElementBy(byID, location_0_val, driver), "value" );
-        String HoletRooms       = getAttributeValue( findElementBy(byID, rooms_0_val, driver),"value" );
-        String HoletRoomType    = getAttributeValue( findElementBy(byID, room_type_0_val, driver),"value" );
-        String NoDays           = getAttributeValue( findElementBy(byID, no_days_0_val, driver),"value" );
+        String HoletName = getAttributeValue(findElementByID(hotel_name_0_val), "value");
+        String HoletLocation = getAttributeValue(findElementByID(location_0_val), "value");
+        String HoletRooms = getAttributeValue(findElementByID(rooms_0_val), "value");
+        String HoletRoomType = getAttributeValue(findElementByID(room_type_0_val), "value");
+        String NoDays = getAttributeValue(findElementByID(no_days_0_val), "value");
 
         System.out.println(HoletName);
         System.out.println(HoletLocation);
@@ -79,10 +50,10 @@ public class Main {
         verifyTextPresent("Hotel Sunshine", false);
         verifyTextPresent("25/05/2024", false);
 
-        click( findElementBy(byID, radio_radiobutton_0, driver) );
-        click( findElementBy(byID, btnContinue, driver) );
+        click(findElementByID(radiobutton_0));
+        click(findElementByID(btnContinue));
 
-        waitForElement( hotel_name_dis_val, 1);
+        waitForElementByID(hotel_name_dis_val, 1);
 
         System.out.println("Validating Book A Hotel Page");
         verifyTextPresent("Hotel Sunshine", false);
@@ -91,45 +62,7 @@ public class Main {
 
         closeWindow();
 
-
     }
 
-    public static WebElement findElementBy(String finder, String value, WebDriver driver)
-    {
-        WebElement element;
-        try
-        {
-            switch (finder)
-            {
-                case "id":
-                    element = driver.findElement(By.id(value));
-                    break;
-                case "name":
-                    element = driver.findElement(By.name(value));
-                    break;
-                case "className":
-                    element = driver.findElement(By.className(value));
-                    break;
-                case "xpath":
-                    element = driver.findElement(By.xpath(value));
-                    break;
-                default:
-                    element = driver.findElement(By.xpath(value));
-
-
-            }
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        return element;
-
-    }
-
-    public static WebDriver getDriver()
-    {
-        return driverFinal.get();
-    }
 
 }
