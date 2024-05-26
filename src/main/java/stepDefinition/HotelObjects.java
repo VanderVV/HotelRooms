@@ -3,9 +3,11 @@ package stepDefinition;
 
 public class HotelObjects {
 
-    public static String url = "https://adactinhotelapp.com/index.php";
+    public static String url                        = "https://adactinhotelapp.com/index.php";
     public static String chromedriverPath 	        = "B:\\Coding\\HotelRooms\\src\\main\\resources\\drivers/chromedriver.exe";
     public static String chromeWebdriver 	        = "webdriver.chrome.driver";
+    public static String user_username 	            = "AutotestB";
+    public static String user_password 	            = "W858OZ";
 
     //    Selector
     public static String byID 	        = "id";

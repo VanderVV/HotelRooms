@@ -1,5 +1,6 @@
 package stepDefinition;
 
+import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -9,6 +10,12 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
+//import org.testng.Assert;
+//import org.testng.annotations.Test;
+import static org.junit.Assert.assertEquals;
+//
+//import com.aventstack.extentreports.ExtentTest;
+//import com.aventstack.extentreports.Status;
 
 import static stepDefinition.HotelObjects.chromeWebdriver;
 import static stepDefinition.HotelObjects.chromedriverPath;
@@ -121,13 +128,28 @@ public class BasePage {
         }
     }
 
-    public static void selectOptionByValue(WebElement element, String value) {
+    public static void selectOptionByValue(WebElement element, String value) throws Exception {
         try {
             Select dropdown = new Select(element);
 
             dropdown.selectByValue(value);
         } catch (NoSuchElementException e) {
             throw new NoSuchElementException(messageNoSuchElementException + element.toString());
+        } catch (Exception e)
+        {
+            throw  new Exception(element.toString() + " .... "+ e);
+        }
+    }
+    public static void selectOptionByText(WebElement element, String value) throws Exception {
+        try {
+            Select dropdown = new Select(element);
+
+            dropdown.selectByVisibleText(value);
+        } catch (NoSuchElementException e) {
+            throw new NoSuchElementException(messageNoSuchElementException + element.toString());
+        }catch (Exception e)
+        {
+            throw  new Exception(element.toString() + " .... "+ e);
         }
     }
     public static void closeWindow() {
@@ -138,6 +160,18 @@ public class BasePage {
         String attributeValue = "";
         try {
             attributeValue = element.getAttribute(attribute);
+        } catch (NoSuchElementException e) {
+            throw new NoSuchElementException(messageNoSuchElementException + element);
+        } catch (ElementNotInteractableException e) {
+            throw new ElementNotInteractableException(messageElementNotInteractableException + element);
+        }
+
+        return attributeValue;
+    }
+public static String getAttributeValue(WebElement element) {
+        String attributeValue = "";
+        try {
+            attributeValue = element.getAttribute("value");
         } catch (NoSuchElementException e) {
             throw new NoSuchElementException(messageNoSuchElementException + element);
         } catch (ElementNotInteractableException e) {
@@ -169,7 +203,7 @@ public class BasePage {
         } else {
             if (driver.getPageSource().contains(text)) {
                 textPresent = true;
-                System.out.println("text Present :  test Passed");
+                System.out.println("text Present :  test Continues");
             } else {
                 System.out.println("text Not Present : test Failed");
             }
@@ -196,6 +230,50 @@ public class BasePage {
             throw new NoSuchElementException(messageNoSuchElementException + fieldName);
         }
         return elementPresent;
+    }
+
+
+    /**
+     * Verifies if specified element has a specified text.
+     * @param element			Web element to verify
+     * @param checkPointValue 		The expected text of the attribute
+     * @param test				The ExtendBase Object
+     * @return					True if Text is present on element
+     */
+//    public static boolean verifyElementText(WebElement element, String checkPointValue,  ExtentTest test) {
+//
+//        boolean result = false;
+//
+//        ExtentTest tests = null;
+//        tests.log(Status.INFO, "Scenario: Validate");
+//
+//        result =  verifyElementText(element, checkPointValue);
+//
+//        test.log(Status.PASS, "Expected value: " + checkPointValue + "," + " is present on element: " +   element.toString() + "'s text");
+//
+//        return result;
+//    }
+
+    /***
+     * Verifies if specified element has a specified text.
+     * @param element		Web element to verify
+     * @param checkPoint 	The expected text of the attribute
+     * @return				True if Text is present on element
+     */
+    public static boolean verifyElementText(WebElement element,String checkPoint) {
+        String elementText = "";
+        try {
+            elementText = getAttributeValue(element);
+
+
+
+            assertEquals(elementText, checkPoint);
+        }catch(AssertionError e) {
+            throw new AssertionError(messageAssertionError);
+        }catch(NoSuchElementException e) {
+            throw new NoSuchElementException(messageNoSuchElementException + element.toString());
+        }
+        return elementText.equals(checkPoint);
     }
 }
 
