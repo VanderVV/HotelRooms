@@ -1,4 +1,4 @@
-package stepDefinition;
+package pages;
 
 
 public class HotelObjects {

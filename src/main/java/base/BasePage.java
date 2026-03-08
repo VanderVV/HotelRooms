@@ -1,4 +1,4 @@
-package stepDefinition;
+package base;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
