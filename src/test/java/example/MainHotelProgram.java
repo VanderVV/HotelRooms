@@ -1,74 +1,87 @@
 package example;
 
-import static stepDefinition.BasePage.*;
-import static stepDefinition.HotelObjects.*;
+import static base.BasePage.*;
+import static pages.BookHotelPage.*;
+import static pages.HotelObjects.*;
+import static pages.LoginFlow.loginWithValidUser;
+import static pages.SearchHotelPage.*;
+import static utils.ConfigReader.get;
+import static utils.ScreenshotUtil.captureScreenshot;
 
 
 public class MainHotelProgram {
 
 
-    public static void mainProgram(String location, String hotelName, String roomtype, String numberofRooms, String dateCheckIn, String dateCheckOut, String adultRooms, String childRooms) throws Exception {
+    public static void mainProgram(String location, String hotelName, String roomType, String numberOfRooms, String dateCheckIn, String dateCheckOut, String adultRooms, String childRooms, String firstName, String lastName, String billingAddress, String ccNo, String ccType, String ccMonth, String ccYear, String ccCvvNo) throws Exception {
 
-        driverSetup(url);
+        driverSetup(get("url"));
 
-        waitForElementByID(username_input, 5);
+        loginWithValidUser();
 
-        setText(findElementByID(username_input), user_username);
-        setText(findElementByID(password_input), user_password);
-        click(findElementByID(btnLogin));
-
-        waitForElementByID(location_dd, 5);
-
-        selectOptionByValue(findElementByID(location_dd), location);
-        selectOptionByValue(findElementByID(hotels_dd), hotelName);
-        selectOptionByValue(findElementByID(room_type_dd), roomtype);
-        selectOptionByText(findElementByID(room_nos_dd), numberofRooms);
-
-        setText(findElementByID(datepick_in), dateCheckIn);
-        setText(findElementByID(datepick_out), dateCheckOut);
-
-        selectOptionByText(findElementByID(adult_room_dd), adultRooms);
-        selectOptionByText(findElementByID(child_room_dd), childRooms);
+        selectHotelCriteria(location, hotelName, roomType, numberOfRooms);
+        setBookingDates(dateCheckIn, dateCheckOut);
+        setOccupancyDetails(adultRooms, childRooms);
 
         click(findElementByID(btnSearch));
 
-        waitForElementByID(hotel_name_0_val, 1);
-
-        String HoletName = getAttributeValue(findElementByID(hotel_name_0_val));
-        String HoletLocation = getAttributeValue(findElementByID(location_0_val));
-        String HoletRooms = getAttributeValue(findElementByID(rooms_0_val));
-        String HoletRoomType = getAttributeValue(findElementByID(room_type_0_val));
-        String NoDays = getAttributeValue(findElementByID(no_days_0_val));
-
-        verifyElementText(findElementByID(hotel_name_0_val), hotelName);
-        verifyElementText(findElementByID(location_0_val), location);
-        verifyElementText(findElementByID(room_type_0_val), roomtype);
-
-        System.out.println(HoletName);
-        System.out.println(HoletLocation);
-        System.out.println(HoletRooms);
-        System.out.println(HoletRoomType);
-        System.out.println(NoDays);
-
-        verifyTextPresent(location, false);
-        verifyTextPresent(hotelName, false);
-        verifyTextPresent(roomtype, false);
-        verifyTextPresent(dateCheckIn, false);
-        verifyTextPresent(dateCheckOut, false);
+        verifyHotelSelect(location, hotelName, roomType);
 
         click(findElementByID(radiobutton_0));
         click(findElementByID(btnContinue));
 
-        waitForElementByID(hotel_name_dis_val, 1);
+        verifyBookingPage(hotel_name_dis_val,location, hotelName, roomType);
+        //take page screenshot
 
-        System.out.println("Validating Book A Hotel Page");
-        verifyTextPresent(location, false);
-        verifyTextPresent(hotelName, false);
-        verifyTextPresent(roomtype, false);
+        bookHotelCriteria(firstName, lastName, billingAddress, ccNo, ccType, ccMonth, ccYear, ccCvvNo);
 
-        closeWindow();
+        click(findElementByID(btnBook_now));
+
+        verifyBookingPage(order_no_val,location, hotelName, firstName);
+        //take page screenshot
+
+        click(findElementByID(btnMyItinerary));
+
+        waitForElementBy("name",btnCancelSelected, 15);
+
+        //take page screenshot
+        captureScreenshot(driver,"To Cancel Selected");
+
+
+        click(findElementByID(btnLogout));
+
+        verifyTextPresent(logoutSuccess, false);
+
+        captureScreenshot(driver,"Logout Success");
+
+
+
+
+        //take page screenshot
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       // closeWindow();
 
     }
+
+
 
 
 }
