@@ -96,13 +96,13 @@ public class MainTest {
 
         loginWithValidUser();
 
-//        HotelSearchFlow hotelSearch = new HotelSearchFlow(driver);
-//
-//        hotelSearch.searchHotel(
-//                "Sydney",
-//                "Hotel Sunshine",
-//                "Standard"
-//        );
+        HotelSearchFlow hotelSearch = new HotelSearchFlow(driver);
+
+        hotelSearch.searchHotel(
+                "Sydney",
+                "Hotel Sunshine",
+                "Standard"
+        );
     }
 
     @Test
